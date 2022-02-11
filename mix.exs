@@ -45,8 +45,12 @@ defmodule Blog.MixProject do
       {:plug_cowboy, "~> 2.5"},
       {:absinthe, "~> 1.7"},
       {:absinthe_plug, "~> 1.5"},
+<<<<<<< HEAD
       {:dataloader, "~> 1.0"},
       {:quarry, "~> 0.2"}
+=======
+      {:dataloader, "~> 1.0"}
+>>>>>>> be9ff8d (step 2)
     ]
   end
 

@@ -1,6 +1,8 @@
 defmodule BlogApi.Schema.AuthorTypes do
   use Absinthe.Schema.Notation
 
+  import Absinthe.Resolution.Helpers, only: [dataloader: 1]
+
   alias BlogApi.Resolvers
 
   object :author_queries do
@@ -17,7 +19,7 @@ defmodule BlogApi.Schema.AuthorTypes do
   object :author do
     field :id, :id
     field :publisher, :string
-    field :user, non_null(:user), resolve: &Resolvers.Author.user/3
-    field :posts, list_of(:post), resolve: &Resolvers.Author.posts/3
+    field :user, non_null(:user), resolve: dataloader(Blog)
+    field :posts, list_of(:post), resolve: dataloader(Blog)
   end
 end

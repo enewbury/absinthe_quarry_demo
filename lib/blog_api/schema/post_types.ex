@@ -1,6 +1,8 @@
 defmodule BlogApi.Schema.PostTypes do
   use Absinthe.Schema.Notation
 
+  import Absinthe.Resolution.Helpers, only: [dataloader: 1]
+
   alias BlogApi.Resolvers
 
   object :post_queries do
@@ -19,7 +21,7 @@ defmodule BlogApi.Schema.PostTypes do
     field :title, :string
     field :body, :string
     field :views, non_null(:integer)
-    field :author, non_null(:author), resolve: &Resolvers.Post.author/3
-    field :comments, list_of(:comment), resolve: &Resolvers.Post.comments/3
+    field :author, non_null(:author), resolve: dataloader(Blog)
+    field :comments, list_of(:comment), resolve: dataloader(Blog)
   end
 end

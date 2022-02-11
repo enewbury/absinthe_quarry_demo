@@ -6,4 +6,7 @@ defmodule Blog do
   Contexts are also responsible for managing your data, regardless
   if it comes from the database, an external API or others.
   """
+  def data() do
+    Dataloader.Ecto.new(Blog.Repo)
+  end
 end

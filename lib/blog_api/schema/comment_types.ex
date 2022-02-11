@@ -1,7 +1,7 @@
 defmodule BlogApi.Schema.CommentTypes do
   use Absinthe.Schema.Notation
 
-  alias BlogApi.Resolvers
+  import Absinthe.Resolution.Helpers, only: [dataloader: 1]
 
   object :comment_queries do
   end
@@ -9,7 +9,7 @@ defmodule BlogApi.Schema.CommentTypes do
   object :comment do
     field :id, :id
     field :body, :string
-    field :user, non_null(:user), resolve: &Resolvers.Comment.user/3
-    field :post, :post, resolve: &Resolvers.Comment.post/3
+    field :user, non_null(:user), resolve: dataloader(Blog)
+    field :post, :post, resolve: dataloader(Blog)
   end
 end

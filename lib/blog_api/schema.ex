@@ -5,10 +5,21 @@ defmodule BlogApi.Schema do
 
   use Absinthe.Schema
 
+  import_types(BlogApi.Schema.FilterTypes)
   import_types(BlogApi.Schema.UserTypes)
   import_types(BlogApi.Schema.AuthorTypes)
   import_types(BlogApi.Schema.PostTypes)
   import_types(BlogApi.Schema.CommentTypes)
+
+  enum :operator do
+    value(:eq)
+    value(:lt)
+    value(:lte)
+    value(:gt)
+    value(:gte)
+    value(:starts_with)
+    value(:ends_with)
+  end
 
   query do
     import_fields(:user_queries)

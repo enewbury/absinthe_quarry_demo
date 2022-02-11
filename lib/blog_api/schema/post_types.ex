@@ -22,14 +22,19 @@ defmodule BlogApi.Schema.PostTypes do
     field :title, :string
     field :body, :string
     field :views, non_null(:integer)
-    field :author, non_null(:author), resolve: dataloader(Blog)
+
+    field :author, non_null(:author) do
+      arg(:filter, :author_filter)
+      resolve(dataloader(Blog))
+    end
+
     field :comments, list_of(:comment), resolve: dataloader(Blog)
   end
 
   input_object :post_filter do
     field :title, :string
     field :body, :string
-    field :views, :integer
+    field :views, :int_filter
     field :author, :author_filter
   end
 end

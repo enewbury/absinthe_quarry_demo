@@ -12,6 +12,7 @@ defmodule BlogApi.Schema.AuthorTypes do
     end
 
     field :authors, list_of(:author) do
+      arg(:filter, :author_filter)
       resolve(&Resolvers.Author.authors/2)
     end
   end

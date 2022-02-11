@@ -3,13 +3,8 @@ defmodule BlogApi.Resolvers.Post do
     {:ok, Blog.Posts.get(id)}
   end
 
-  def posts(%{filter: %{author: author} = post}, _) do
-    {:ok, Blog.Posts.all_by_author(Map.delete(post, :author), author)}
-  end
-
-  def posts(%{filter: post}, _) do
-    criteria = Keyword.new(post)
-    {:ok, Blog.Posts.all(criteria)}
+  def posts(%{filter: post_filter}, _) do
+    {:ok, Blog.Posts.all(post_filter)}
   end
 
   def posts(_, _) do

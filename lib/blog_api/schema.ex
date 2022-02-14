@@ -27,15 +27,4 @@ defmodule BlogApi.Schema do
     import_fields(:post_queries)
     import_fields(:comment_queries)
   end
-
-  @impl true
-  def context(ctx) do
-    loader = Dataloader.new() |> Dataloader.add_source(Blog, Blog.data())
-    Map.put(ctx, :loader, loader)
-  end
-
-  @impl true
-  def plugins do
-    [Absinthe.Middleware.Dataloader | Absinthe.Plugin.defaults()]
-  end
 end

@@ -1,9 +1,10 @@
 defmodule BlogApi.Schema.PostTypes do
   use Absinthe.Schema.Notation
 
-  import Absinthe.Resolution.Helpers, only: [dataloader: 1]
+  import BlogApi.Resolvers.Quarry
 
   alias BlogApi.Resolvers
+  alias Blog.Posts
 
   object :post_queries do
     field :post, :post do
@@ -13,7 +14,7 @@ defmodule BlogApi.Schema.PostTypes do
 
     field :posts, list_of(:post) do
       arg(:filter, :post_filter)
-      resolve(&Resolvers.Post.posts/2)
+      resolve(quarry(&Posts.all/1))
     end
   end
 
@@ -22,19 +23,18 @@ defmodule BlogApi.Schema.PostTypes do
     field :title, :string
     field :body, :string
     field :views, non_null(:integer)
+    field :author, non_null(:author)
 
-    field :author, non_null(:author) do
-      arg(:filter, :author_filter)
-      resolve(dataloader(Blog))
+    field :comments, list_of(:comment) do
+      arg(:filter, :comment_filter)
     end
-
-    field :comments, list_of(:comment), resolve: dataloader(Blog)
   end
 
   input_object :post_filter do
     field :title, :string
     field :body, :string
-    field :views, :integer_filter
+    field :views_where, :integer_filter
+    field :views, :integer
     field :author, :author_filter
   end
 end

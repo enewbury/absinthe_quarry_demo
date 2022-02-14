@@ -6,9 +6,9 @@ defmodule Blog.Authors do
     Repo.get(Author, id)
   end
 
-  def all(criteria \\ %{}) do
+  def all(opts \\ []) do
     Author
-    |> Quarry.build(filter: criteria)
+    |> Quarry.build(opts)
     |> Repo.all()
   end
 end

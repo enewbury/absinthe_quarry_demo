@@ -8,4 +8,9 @@ defmodule BlogApi.Schema.UserTypes do
     field :id, :id
     field :name, :string
   end
+
+  input_object :user_filter do
+    field :id, :id
+    field :name, :string
+  end
 end

@@ -23,7 +23,7 @@ defmodule BlogApi.Schema.AuthorTypes do
     field :posts, list_of(:post), resolve: dataloader(Blog)
   end
 
-  input_object :author_input do
+  input_object :author_filter do
     field :publisher, :string
   end
 end

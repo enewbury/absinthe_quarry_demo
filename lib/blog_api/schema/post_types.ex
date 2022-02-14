@@ -12,7 +12,7 @@ defmodule BlogApi.Schema.PostTypes do
     end
 
     field :posts, list_of(:post) do
-      arg(:post, :post_input)
+      arg(:filter, :post_filter)
       resolve(&Resolvers.Post.posts/2)
     end
   end
@@ -26,10 +26,10 @@ defmodule BlogApi.Schema.PostTypes do
     field :comments, list_of(:comment), resolve: dataloader(Blog)
   end
 
-  input_object :post_input do
+  input_object :post_filter do
     field :title, :string
     field :body, :string
     field :views, :integer
-    field :author, :author_input
+    field :author, :author_filter
   end
 end

@@ -6,7 +6,7 @@ defmodule BlogApi.Schema.FilterTypes do
     field :value, :string
   end
 
-  input_object :int_filter do
+  input_object :integer_filter do
     field :op, :operator
     field :value, :integer
   end

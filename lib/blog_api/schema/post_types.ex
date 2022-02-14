@@ -34,7 +34,7 @@ defmodule BlogApi.Schema.PostTypes do
   input_object :post_filter do
     field :title, :string
     field :body, :string
-    field :views, :int_filter
+    field :views, :integer_filter
     field :author, :author_filter
   end
 end

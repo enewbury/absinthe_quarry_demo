@@ -1,14 +1,14 @@
-defmodule Blog.Posts do
+defmodule Blog.Comments do
   alias Blog.Repo
-  alias Blog.Post
+  alias Blog.Comment
 
   import Ecto.Query
 
   def get(id) do
-    Repo.get(Post, id)
+    Repo.get(Comment, id)
   end
 
   def all(criteria \\ []) do
-    Repo.all(from(p in Post, where: ^criteria))
+    Repo.all(from(c in Comment, where: ^criteria))
   end
 end

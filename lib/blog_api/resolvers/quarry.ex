@@ -8,7 +8,7 @@ defmodule BlogApi.Resolvers.Quarry do
   end
 
   defp extract_opts(args, fields) when map_size(args) == 0 do
-    extract_loads(fields)
+    [load: extract_loads(fields)]
   end
 
   defp extract_opts(args, fields) do

@@ -45,7 +45,7 @@ defmodule EspionageApi.Schema do
 
   input_object :mission_filter do
     field :title, :string
-    field :agent, :agent_filter
+    field :agents, :agent_filter
   end
 
   input_object :agent_filter do

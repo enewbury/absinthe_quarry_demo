@@ -1,5 +1,5 @@
 defmodule EspionageApi.Resolvers.Mission do
-  def missions(%{filter: %{agent: agent} = mission}, _) do
+  def missions(%{filter: %{agents: agent} = mission}, _) do
     mission_criteria = mission |> Map.delete(:agent) |> Map.to_list()
     {:ok, Espionage.Missions.all_by_agent(mission_criteria, Map.to_list(agent))}
   end

@@ -4,7 +4,6 @@ defmodule EspionageApi.Schema do
   """
   use Absinthe.Schema
 
-  import Absinthe.Resolution.Helpers, only: [dataloader: 1]
   import AbsintheQuarry.Helpers, only: [quarry: 2]
 
   alias Espionage.{Mission, Repo}
@@ -23,22 +22,25 @@ defmodule EspionageApi.Schema do
     field :title, :string
     field :description, :string
     field :priority, non_null(:integer)
-    field :director, non_null(:director), resolve: dataloader(Espionage)
-    field :agents, list_of(:agent), resolve: dataloader(Espionage)
+    field :director, non_null(:director), meta: [quarry: true]
+
+    field :agents, list_of(:agent), meta: [quarry: true] do
+      arg(:filter, :agent_filter)
+    end
   end
 
   object :director do
     field :id, :id
     field :name, :string
-    field :base, non_null(:base), resolve: dataloader(Espionage)
-    field :missions, list_of(:mission), resolve: dataloader(Espionage)
+    field :base, non_null(:base), meta: [quarry: true]
+    field :missions, list_of(:mission), meta: [quarry: true]
   end
 
   object :agent do
     field :id, :id
     field :name, :string
-    field :base, non_null(:base), resolve: dataloader(Espionage)
-    field :mission, :mission, resolve: dataloader(Espionage)
+    field :base, non_null(:base), meta: [quarry: true]
+    field :mission, :mission, meta: [quarry: true]
   end
 
   object :base do
@@ -70,16 +72,5 @@ defmodule EspionageApi.Schema do
   enum :mission_sort do
     value(:priority)
     value(:director__name)
-  end
-
-  @impl true
-  def context(ctx) do
-    loader = Dataloader.new() |> Dataloader.add_source(Espionage, Espionage.data())
-    Map.put(ctx, :loader, loader)
-  end
-
-  @impl true
-  def plugins do
-    [Absinthe.Middleware.Dataloader | Absinthe.Plugin.defaults()]
   end
 end

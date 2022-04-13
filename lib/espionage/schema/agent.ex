@@ -1,22 +1,23 @@
-defmodule Blog.Comment do
+defmodule Espionage.Agent do
   use Ecto.Schema
   import Ecto.Changeset
 
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
-  schema "comments" do
-    field :body, :string
+  schema "agents" do
+    field :name, :string
 
-    belongs_to :user, Blog.User
-    belongs_to :post, Blog.Post
+    belongs_to :mission, Espionage.Mission
+    belongs_to :base, Espionage.Base
 
     timestamps()
   end
 
   @doc false
+
   def changeset(comment, attrs) do
     comment
-    |> cast(attrs, [:body])
-    |> validate_required([:body])
+    |> cast(attrs, [:name])
+    |> validate_required([:name])
   end
 end

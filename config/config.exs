@@ -7,14 +7,14 @@
 # General application configuration
 import Config
 
-config :blog,
-  ecto_repos: [Blog.Repo],
+config :espionage,
+  ecto_repos: [Espionage.Repo],
   generators: [binary_id: true]
 
 # Configures the endpoint
-config :blog, BlogApi.Endpoint,
+config :espionage, EspionageApi.Endpoint,
   url: [host: "localhost"],
-  pubsub_server: Blog.PubSub
+  pubsub_server: Espionage.PubSub
 
 # Configures Elixir's Logger
 config :logger, :console,

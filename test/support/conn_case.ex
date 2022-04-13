@@ -1,4 +1,4 @@
-defmodule BlogApi.ConnCase do
+defmodule EspionageApi.ConnCase do
   @moduledoc """
   This module defines the test case to be used by
   tests that require setting up a connection.
@@ -11,7 +11,7 @@ defmodule BlogApi.ConnCase do
   we enable the SQL sandbox, so changes done to the database
   are reverted at the end of every test. If you are using
   PostgreSQL, you can even run database tests asynchronously
-  by setting `use BlogApi.ConnCase, async: true`, although
+  by setting `use EspionageApi.ConnCase, async: true`, although
   this option is not recommended for other databases.
   """
 
@@ -22,15 +22,15 @@ defmodule BlogApi.ConnCase do
       # Import conveniences for testing with connections
       import Plug.Conn
       import Phoenix.ConnTest
-      import BlogApi.ConnCase
+      import EspionageApi.ConnCase
 
       # The default endpoint for testing
-      @endpoint BlogApi.Endpoint
+      @endpoint EspionageApi.Endpoint
     end
   end
 
   setup tags do
-    pid = Ecto.Adapters.SQL.Sandbox.start_owner!(Blog.Repo, shared: not tags[:async])
+    pid = Ecto.Adapters.SQL.Sandbox.start_owner!(Espionage.Repo, shared: not tags[:async])
     on_exit(fn -> Ecto.Adapters.SQL.Sandbox.stop_owner(pid) end)
     {:ok, conn: Phoenix.ConnTest.build_conn()}
   end

@@ -1,10 +1,10 @@
-defmodule BlogApi do
+defmodule EspionageApi do
   @moduledoc """
     The entrypoint for defining your api interface
 
     This can be used in your application as:
 
-        use BlogApi, :schema
+        use EspionageApi, :schema
 
   """
 

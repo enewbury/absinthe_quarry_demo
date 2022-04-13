@@ -5,83 +5,82 @@
 # Inside the script, you can read and write to any of your
 # repositories directly:
 #
-#     Blog.Repo.insert!(%Blog.SomeSchema{})
+#     Espionage.Repo.insert!(%Espionage.SomeSchema{})
 #
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
 #
-alias Blog.Repo
-alias Blog.{Post, Comment, Author, User}
+alias Espionage.Repo
+alias Espionage.{Mission, Agent, Director, Base}
 
-%{id: user_id_1} =
-  %User{
-    name: "Eric Newbury"
+%{id: base_id_1} =
+  %Base{
+    name: "Belgium"
   }
   |> Repo.insert!()
 
-%{id: user_id_2} =
-  %User{
-    name: "Luke Skywalker"
+%{id: base_id_2} =
+  %Base{
+    name: "Poland"
   }
   |> Repo.insert!()
 
-%{id: user_id_3} =
-  %User{
-    name: "Han Solo"
+%{id: base_id_3} =
+  %Base{
+    name: "Washington"
   }
   |> Repo.insert!()
 
-%{id: author_id_1} =
-  %Author{
-    publisher: "TestDouble",
-    user_id: user_id_1
+%{id: director_id_1} =
+  %Director{
+    name: "Kittridge",
+    base_id: base_id_3
   }
   |> Repo.insert!()
 
-%{id: post_id_1} =
-  %Post{
-    title: "Getting off the grid",
-    body:
-      "In this post I’d like to discuss what I view as the most important step away from big tech—the phone.",
-    views: 10,
-    author_id: author_id_1
+%{id: mission_id_1} =
+  %Mission{
+    title: "Prevent Leak",
+    description: "Go to Prague for a mission to prevent the theft of classified material",
+    priority: 10,
+    director_id: director_id_1
   }
   |> Repo.insert!()
 
-%{id: post_id_2} =
-  %Post{
-    title: "Why functional?",
-    body:
-      "At some point, you may have looked at an example of a TODO app written functionally...",
-    views: 8,
-    author_id: author_id_1
+%{id: mission_id_2} =
+  %Mission{
+    title: "Stop Outbreak",
+    description:
+      "Go to Sydney to find and destroy a genetically modified disease called 'Chimera'",
+    priority: 8,
+    director_id: director_id_1
   }
   |> Repo.insert!()
 
-%Comment{
-  body: "This is really cool!",
-  post_id: post_id_1,
-  user_id: user_id_2
+%Agent{
+  name: "Ethan Hunt",
+  mission_id: mission_id_1,
+  base_id: base_id_2
 }
 |> Repo.insert!()
 
-%Comment{
-  body: "This is garbage!",
-  post_id: post_id_1,
-  user_id: user_id_3
+%Agent{
+  name: "Jim Phelps",
+  mission_id: mission_id_1,
+  base_id: base_id_3
 }
 |> Repo.insert!()
 
-%Comment{
-  body: "I don't know, how about code written with the 'force' instead?",
-  post_id: post_id_2,
-  user_id: user_id_2
+%Agent{
+  name: "Claire",
+  mission_id: mission_id_2,
+  base_id: base_id_2
 }
 |> Repo.insert!()
 
-%Comment{
-  body: "Actually, yeah, this is da best",
-  post_id: post_id_2,
-  user_id: user_id_2
+%Agent{
+  name: "Krieger",
+  mission_id: mission_id_2,
+  base_id: base_id_2
 }
 |> Repo.insert!()

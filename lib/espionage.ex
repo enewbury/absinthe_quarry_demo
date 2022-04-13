@@ -1,6 +1,6 @@
-defmodule Blog do
+defmodule Espionage do
   @moduledoc """
-  Blog keeps the contexts that define your domain
+  Espionage keeps the contexts that define your domain
   and business logic.
 
   Contexts are also responsible for managing your data, regardless

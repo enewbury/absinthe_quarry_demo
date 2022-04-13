@@ -5,13 +5,16 @@ defmodule EspionageApi.Schema do
   use Absinthe.Schema
 
   import Absinthe.Resolution.Helpers, only: [dataloader: 1]
+  import AbsintheQuarry.Helpers, only: [quarry: 2]
 
-  alias EspionageApi.Resolvers
+  alias Espionage.{Mission, Repo}
 
   query do
     field :missions, list_of(:mission) do
       arg(:filter, :mission_filter)
-      resolve(&Resolvers.Mission.missions/2)
+      arg(:sort, list_of(:mission_sort))
+      arg(:limit, :integer)
+      resolve(quarry(Mission, Repo))
     end
   end
 
@@ -46,10 +49,27 @@ defmodule EspionageApi.Schema do
   input_object :mission_filter do
     field :title, :string
     field :agents, :agent_filter
+    field :director, :director_filter
+    field :priority__gte, :integer
   end
 
   input_object :agent_filter do
     field :name, :string
+    field :base, :base_filter
+  end
+
+  input_object :director_filter do
+    field :name, :string
+    field :base, :base_filter
+  end
+
+  input_object :base_filter do
+    field :name, :string
+  end
+
+  enum :mission_sort do
+    value(:priority)
+    value(:director__name)
   end
 
   @impl true

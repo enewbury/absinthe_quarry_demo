@@ -45,7 +45,9 @@ defmodule Espionage.MixProject do
       {:plug_cowboy, "~> 2.5"},
       {:absinthe, "~> 1.7"},
       {:absinthe_plug, "~> 1.5"},
-      {:dataloader, "~> 1.0"}
+      {:dataloader, "~> 1.0"},
+      {:quarry, "~> 0.3"},
+      {:absinthe_quarry, "~> 0.0"}
     ]
   end
 

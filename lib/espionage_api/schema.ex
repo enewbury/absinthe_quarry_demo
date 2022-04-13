@@ -10,6 +10,7 @@ defmodule EspionageApi.Schema do
 
   query do
     field :missions, list_of(:mission) do
+      arg(:filter, :mission_filter)
       resolve(&Resolvers.Mission.missions/2)
     end
   end
@@ -39,6 +40,15 @@ defmodule EspionageApi.Schema do
 
   object :base do
     field :id, :id
+    field :name, :string
+  end
+
+  input_object :mission_filter do
+    field :title, :string
+    field :agent, :agent_filter
+  end
+
+  input_object :agent_filter do
     field :name, :string
   end
 

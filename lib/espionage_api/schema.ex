@@ -2,10 +2,11 @@ defmodule EspionageApi.Schema do
   @moduledoc """
   The root of the absinthe schema definitions
   """
+  use Absinthe.Schema
+
+  import Absinthe.Resolution.Helpers, only: [dataloader: 1]
 
   alias EspionageApi.Resolvers
-
-  use Absinthe.Schema
 
   query do
     field :missions, list_of(:mission) do
@@ -18,26 +19,37 @@ defmodule EspionageApi.Schema do
     field :title, :string
     field :description, :string
     field :priority, non_null(:integer)
-    field :director, non_null(:director), resolve: &Resolvers.Mission.director/3
-    field :agents, list_of(:agent), resolve: &Resolvers.Mission.agents/3
+    field :director, non_null(:director), resolve: dataloader(Espionage)
+    field :agents, list_of(:agent), resolve: dataloader(Espionage)
   end
 
   object :director do
     field :id, :id
     field :name, :string
-    field :base, non_null(:base), resolve: &Resolvers.Director.base/3
-    field(:missions, list_of(:mission), resolve: &Resolvers.Director.missions/3)
+    field :base, non_null(:base), resolve: dataloader(Espionage)
+    field :missions, list_of(:mission), resolve: dataloader(Espionage)
   end
 
   object :agent do
     field :id, :id
     field :name, :string
-    field :base, non_null(:base), resolve: &Resolvers.Agent.base/3
-    field :mission, :mission, resolve: &Resolvers.Agent.mission/3
+    field :base, non_null(:base), resolve: dataloader(Espionage)
+    field :mission, :mission, resolve: dataloader(Espionage)
   end
 
   object :base do
     field :id, :id
     field :name, :string
+  end
+
+  @impl true
+  def context(ctx) do
+    loader = Dataloader.new() |> Dataloader.add_source(Espionage, Espionage.data())
+    Map.put(ctx, :loader, loader)
+  end
+
+  @impl true
+  def plugins do
+    [Absinthe.Middleware.Dataloader | Absinthe.Plugin.defaults()]
   end
 end
